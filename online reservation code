@@ -1,0 +1,72 @@
+import java.util.Scanner;
+
+class ReservationSystem {
+    private boolean[] seats;
+    private int totalSeats;
+
+    public ReservationSystem(int numSeats) {
+        totalSeats = numSeats;
+        seats = new boolean[totalSeats];
+    }
+
+    public void displayAvailableSeats() {
+        System.out.println("Available seats:");
+        for (int i = 0; i < totalSeats; i++) {
+            if (!seats[i]) {
+                System.out.print(i + 1 + " ");
+            }
+        }
+        System.out.println();
+    }
+
+    public boolean reserveSeat(int seatNumber) {
+        if (seatNumber < 1 || seatNumber > totalSeats) {
+            System.out.println("Invalid seat number.");
+            return false;
+        }
+
+        if (seats[seatNumber - 1]) {
+            System.out.println("Seat " + seatNumber + " is already reserved.");
+            return false;
+        }
+
+        seats[seatNumber - 1] = true;
+        System.out.println("Seat " + seatNumber + " has been reserved.");
+        return true;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the total number of seats: ");
+        int numSeats = scanner.nextInt();
+
+        ReservationSystem reservationSystem = new ReservationSystem(numSeats);
+
+        while (true) {
+            System.out.println();
+            System.out.println("1. Display available seats");
+            System.out.println("2. Reserve a seat");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    reservationSystem.displayAvailableSeats();
+                    break;
+                case 2:
+                    System.out.print("Enter the seat number to reserve: ");
+                    int seatNumber = scanner.nextInt();
+                    reservationSystem.reserveSeat(seatNumber);
+                    break;
+                case 3:
+                    System.out.println("Exiting the program.");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}
